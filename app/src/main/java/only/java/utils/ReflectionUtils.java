@@ -1,5 +1,7 @@
 package only.java.utils;
 
+import only.java.repository.AppRepository;
+
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -74,6 +76,17 @@ public class ReflectionUtils {
         return allClasses.stream().filter(clazz -> clazz.isAnnotationPresent(annotation)).toList();
     }
 
+    public  static List<Class<?>> getInstantiableClasses(String path) {
+        List<Class<?>> classes = findProjectClasses(path);
+        List<Class<?>> instantiableClasses = new ArrayList<>();
+
+        classes.forEach(clazz -> {
+            if (!clazz.isInterface() && !clazz.isAnnotation())
+                instantiableClasses.add(clazz);
+        });
+        return instantiableClasses;
+    }
+
     public static List<Class<?>> findProjectClasses(String path) {
         List<Class<?>> classes = new ArrayList<>();
         List<String> packagesPath = getPackagesPath(path);
@@ -81,7 +94,7 @@ public class ReflectionUtils {
             File file = new File(packagePath);
             if (file.isDirectory()) {
                 for (File f : Objects.requireNonNull(file.listFiles())) {
-                    String fullClassName = f.getPath().substring(f.getAbsolutePath().lastIndexOf("main")).substring(5);
+                    String fullClassName = f.getPath().substring(f.getPath().lastIndexOf("main")).substring(5);
                     fullClassName = fullClassName.replace("/", ".").replace(".class", "");
                     try {
                         classes.add(Class.forName(fullClassName));
@@ -112,6 +125,23 @@ public class ReflectionUtils {
                     enterInAllDirectoriesLevels(updatedPath, directories);
                 }
             }
+        }
+    }
+
+    public static Object getInstance(String className) {
+        try {
+            Class clazz = Class.forName(className);
+            return clazz.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Object getInstance(Class<?> clazz) {
+        try {
+            return clazz.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
