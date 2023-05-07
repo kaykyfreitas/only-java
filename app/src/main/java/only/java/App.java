@@ -5,14 +5,17 @@ import only.java.exec.MyTestExec;
 import only.java.lib.annotations.Application;
 import only.java.lib.config.ApplicationRunner;
 import only.java.lib.config.Initializer;
+import only.java.lib.utils.ObjectMapper;
 import only.java.service.AppService;
 import only.java.lib.utils.InjectionUtils;
 import only.java.service.impl.AppServiceImpl;
 
+// TODO trabalhar melhor a annotation @Application
 @Application
 public class App {
 
     public static void main(String[] args) throws Exception {
+        // TODO pensar um forma de inicializar completamente a aplicação pelo Initializer
         ApplicationRunner.run(Initializer.class, args);
 
 
@@ -28,7 +31,7 @@ public class App {
 //
 //        System.out.println();
 
-        // Multiplos niveis de injeção apresenta problemas
+        // Multiplos niveis de injeção apresenta problemas para metodos com mais de uma injeção
 //        MyTestExec executor = InjectionUtils.getInstanceByConstructor(MyTestExec.class);
 //        executor.exec();
 

@@ -91,7 +91,7 @@ public class InjectionUtils {
 
             Constructor<?> onlyInjectableParametersConstructors = null;
             List<Class<?>> injectableParamsList = new ArrayList<>();
-            Object instanceLevel = null;
+            List<Object> instanceLevel = new ArrayList<>();
             for (Constructor<?> constructor : declaredConstructors) {
                 Integer numOfInjectableParameters = 0;
                 Object instance = null;
@@ -110,7 +110,7 @@ public class InjectionUtils {
                 }
                 if (numOfInjectableParameters.equals(constructor.getParameterCount())) {
                     onlyInjectableParametersConstructors = constructor;
-                    instanceLevel = instance;
+                    instanceLevel.add(instance);
 //                    System.out.println(instance.getClass().getName());
                 }
 
@@ -125,19 +125,20 @@ public class InjectionUtils {
                 System.out.println("PARAMS");
                 injectableParamsList.forEach(System.out::println);
                 System.out.println("END");
-                Object[] params = injectableParamsList.stream().map(InjectionUtils::inject).toArray();
+                Object[] params = injectableParamsList.stream().map(InjectionUtils::getInstanceByConstructor).toArray();
+//                instanceLevel.forEach(x -> System.out.println("__" + x.getClass().getName()));
                 return (T) onlyInjectableParametersConstructors.newInstance(params);
             } else if (injectableParamsList.size() == 1) {
-                System.out.println("PARAM");
-                injectableParamsList.forEach(System.out::println);
-                System.out.println("END");
-                System.out.println("INSTANCE LEVER >> " + instanceLevel.getClass().getName());
-                System.out.println("CONSTRUCT >> " + onlyInjectableParametersConstructors.getParameterTypes()[0]);
+//                System.out.println("PARAM");
+//                injectableParamsList.forEach(System.out::println);
+//                System.out.println("END");
+//                System.out.println("INSTANCE LEVER >> " + instanceLevel.getClass().getName());
+//                System.out.println("CONSTRUCT >> " + onlyInjectableParametersConstructors.getParameterTypes()[0]);
 
 //                AppService appService = instanceLevel;
 
 
-                return (T) onlyInjectableParametersConstructors.newInstance(instanceLevel);
+                return (T) onlyInjectableParametersConstructors.newInstance(instanceLevel.get(0));
             } else {
                 System.out.println("else");
                 return (T) onlyInjectableParametersConstructors.newInstance();

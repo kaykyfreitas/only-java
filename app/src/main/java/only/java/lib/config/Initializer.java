@@ -15,6 +15,7 @@ public class Initializer {
         try {
             InjectionUtils.setBasePath(getProjectPath());
 
+            // TODO Existe um ordem correta para instanciar as classes, é necessario achar um meio de seguir essa forma
             List<Object> objects = instantiateObjects();
             ObjectsManagement objectsManagement = (ObjectsManagement) objects.stream()
                     .filter(obj -> obj.getClass().getName().contains("ObjectsManagement")).findFirst()
