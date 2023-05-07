@@ -1,4 +1,4 @@
-package only.java.config;
+package only.java.lib.config;
 
 import java.util.ArrayList;
 import java.util.List;

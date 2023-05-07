@@ -1,6 +1,6 @@
 package only.java.repository.impl;
 
-import only.java.annotations.Injectable;
+import only.java.lib.annotations.Injectable;
 import only.java.repository.AppRepository;
 
 @Injectable

@@ -1,10 +1,10 @@
 package only.java;
 
-import only.java.annotations.Application;
-import only.java.config.ApplicationRunner;
-import only.java.config.Initializer;
+import only.java.lib.annotations.Application;
+import only.java.lib.config.ApplicationRunner;
+import only.java.lib.config.Initializer;
 import only.java.service.AppService;
-import only.java.utils.InjectionUtils;
+import only.java.lib.utils.InjectionUtils;
 
 @Application
 public class App {

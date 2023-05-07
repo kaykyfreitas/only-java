@@ -1,4 +1,4 @@
-package only.java.annotations;
+package only.java.lib.annotations;
 
 import java.lang.annotation.*;
 

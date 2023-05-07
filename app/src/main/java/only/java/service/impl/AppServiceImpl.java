@@ -1,7 +1,7 @@
 package only.java.service.impl;
 
-import only.java.annotations.Inject;
-import only.java.annotations.Injectable;
+import only.java.lib.annotations.Inject;
+import only.java.lib.annotations.Injectable;
 import only.java.repository.AppRepository;
 import only.java.service.AppService;
 

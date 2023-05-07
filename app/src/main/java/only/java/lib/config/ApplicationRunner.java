@@ -1,10 +1,13 @@
-package only.java.config;
+package only.java.lib.config;
+
+import only.java.lib.exceptions.ApplicationException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ApplicationRunner {
 
+    private ApplicationRunner() {}
 
     public static void run(Class<?> appClass, String... args) {
         try {
@@ -12,8 +15,8 @@ public class ApplicationRunner {
 
             Method startMethod = appClass.getMethod("start", String[].class);
             startMethod.invoke(app, new Object[] { args });
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
-            System.out.println("Can't start application: " + e.getMessage());
+        } catch (Exception e) {
+            throw new ApplicationException("Error during application execution: " + e.getMessage());
         }
     }
 
