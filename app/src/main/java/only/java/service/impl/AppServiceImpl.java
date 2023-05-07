@@ -12,13 +12,13 @@ public class AppServiceImpl implements AppService {
 
     private String blablabla;
 
-//    @Inject
+    @Inject
     private AppRepository appRepository;
 
-//    @Inject
+    @Inject
     private MyService myService;
 
-//    @Inject
+    @Inject
     private AppMapper appMapper;
 
     public AppServiceImpl(String blablabla) {

@@ -111,8 +111,15 @@ public class InjectionUtils {
             System.out.println("Params size >> " + onlyInjectableParametersConstructors.getParameterCount());
             System.out.println("Params list size >> " + injectableParamsList.size());
 
-            Object[] params = injectableParamsList.stream().map(InjectionUtils::inject).toArray();
-            return (T) onlyInjectableParametersConstructors.newInstance(params);
+            if (injectableParamsList.size() > 1) {
+                Object[] params = injectableParamsList.stream().map(InjectionUtils::inject).toArray();
+                return (T) onlyInjectableParametersConstructors.newInstance(params);
+            } else if (injectableParamsList.size() == 1) {
+                return (T) onlyInjectableParametersConstructors.newInstance(injectableParamsList.get(0));
+            } else {
+                return (T) onlyInjectableParametersConstructors.newInstance();
+            }
+
 
         } catch (InjectionException e) {
             throw new InjectionException(e.getMessage());
