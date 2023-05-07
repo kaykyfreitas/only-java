@@ -12,19 +12,19 @@ public class AppServiceImpl implements AppService {
 
     private String blablabla;
 
-    @Inject
+//    @Inject
     private AppRepository appRepository;
 
-    @Inject
+//    @Inject
     private MyService myService;
 
-    @Inject
+//    @Inject
     private AppMapper appMapper;
 
-    public AppServiceImpl(String blablabla) {
-        this.blablabla = blablabla;
-    }
-
+//    public AppServiceImpl(String blablabla) {
+//        this.blablabla = blablabla;
+//    }
+//
     public AppServiceImpl(AppRepository appRepository, MyService myService, AppMapper appMapper) {
         this.appRepository = appRepository;
         this.myService = myService;

@@ -7,7 +7,7 @@ import only.java.service.AppService;
 @Injectable
 public class MyTestExec {
 
-    @Inject
+//    @Inject
     private AppService appService;
 
     public MyTestExec(AppService appService) {

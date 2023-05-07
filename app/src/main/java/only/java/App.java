@@ -1,5 +1,6 @@
 package only.java;
 
+import only.java.exec.MyExecution2;
 import only.java.exec.MyTestExec;
 import only.java.lib.annotations.Application;
 import only.java.lib.config.ApplicationRunner;
@@ -16,15 +17,23 @@ public class App {
 
 
         // Para usar a injecao por campo é necessario comentar os contructors
-//        AppServiceImpl appService = InjectionUtils.getInstanceByConstructor(AppServiceImpl.class);
+//        AppServiceImpl appService = InjectionUtils.getInstance(AppServiceImpl.class);
 //        System.out.println(appService.sayHello("Kayky"));
-
-        AppServiceImpl appService = InjectionUtils.getInstanceByConstructor(AppServiceImpl.class);
-        System.out.println(appService.sayHello("Kayky"));
-
-        // Multiplos niveis de injeção apresenta problemas
+//
 //        MyTestExec executor = InjectionUtils.getInstance(MyTestExec.class);
 //        executor.exec();
+
+//        AppServiceImpl appService = InjectionUtils.getInstanceByConstructor(AppServiceImpl.class);
+//        System.out.println(appService.sayHello("Kayky"));
+//
+//        System.out.println();
+
+        // Multiplos niveis de injeção apresenta problemas
+//        MyTestExec executor = InjectionUtils.getInstanceByConstructor(MyTestExec.class);
+//        executor.exec();
+
+        MyExecution2 execution2 = InjectionUtils.getInstanceByConstructor(MyExecution2.class);
+        execution2.execute();
     }
 
 }
