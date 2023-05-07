@@ -15,8 +15,8 @@ public class ApplicationRunner {
 
             Method startMethod = appClass.getMethod("start", String[].class);
             startMethod.invoke(app, new Object[] { args });
-        } catch (Exception e) {
-            throw new ApplicationException("Error during application execution: " + e.getMessage());
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+//            throw new ApplicationException("Error during application execution: " + e.getMessage());
         }
     }
 
