@@ -1,9 +1,10 @@
 package only.java.repository.impl;
 
+import only.java.lib.annotations.Component;
 import only.java.lib.annotations.Injectable;
 import only.java.repository.MyService;
 
-@Injectable
+@Injectable @Component
 public class MyServiceImpl implements MyService {
 
     @Override

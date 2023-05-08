@@ -1,9 +1,11 @@
 package only.java.lib.config;
 
 import only.java.App;
-import only.java.lib.exceptions.ApplicationException;
-import only.java.lib.utils.InjectionUtils;
-import only.java.lib.utils.ReflectionUtils;
+import only.java.lib.annotations.Component;
+import only.java.lib.context.SimpleContext;
+import only.java.lib.exceptions.SimpleException;
+import only.java.lib.utils.SimpleInjectionUtils;
+import only.java.lib.utils.SimpleReflectionUtils;
 
 import java.io.File;
 import java.util.List;
@@ -11,28 +13,21 @@ import java.util.Objects;
 
 public class Initializer {
 
-    public static void start(String[] args) {
+    public static SimpleContext start(String[] args) {
         try {
-            InjectionUtils.setBasePath(getProjectPath());
-
-            // TODO Existe um ordem correta para instanciar as classes, é necessario achar um meio de seguir essa forma
-            List<Object> objects = instantiateObjects();
-            ObjectsManagement objectsManagement = (ObjectsManagement) objects.stream()
-                    .filter(obj -> obj.getClass().getName().contains("ObjectsManagement")).findFirst()
-                    .orElseThrow(() -> new RuntimeException("Can't instantiate ObjectsManagement."));
-            objectsManagement.addObjects(objects);
-
+            SimpleInjectionUtils.setBasePath(getProjectPath());
+            return new SimpleContext(SimpleInjectionUtils.getBasePath());
         } catch (Exception e) {
-            throw new ApplicationException("Error during application initialization: " + e.getMessage());
+            throw new SimpleException("Error during application initialization: " + e.getMessage());
         }
     }
 
     public static List<Object> instantiateObjects() {
         try {
-            List<Class<?>> classes = ReflectionUtils.getInstantiableClasses(getProjectPath());
-            return classes.stream().map(ReflectionUtils::getInstance).toList();
+            List<Class<?>> classes = SimpleReflectionUtils.getInstantiableClasses(getProjectPath());
+            return classes.stream().map(SimpleReflectionUtils::getInstance).toList();
         } catch (Exception e) {
-            throw new ApplicationException("Error during application objects instantiation: " + e.getMessage());
+            throw new SimpleException("Error during application objects instantiation: " + e.getMessage());
         }
     }
 
@@ -42,7 +37,7 @@ public class Initializer {
             File file = new File(Objects.requireNonNull(classLoader.getResource("")).getFile());
             return file.getAbsolutePath();
         } catch (Exception e) {
-            throw new ApplicationException("Error on getProjectPath: " + e.getMessage());
+            throw new SimpleException("Error on getProjectPath: " + e.getMessage());
         }
     }
 
@@ -50,7 +45,7 @@ public class Initializer {
           try {
               return App.class.getPackage().getName();
           } catch (Exception e) {
-              throw new ApplicationException("Error on getMainPackageName: " + e.getMessage());
+              throw new SimpleException("Error on getMainPackageName: " + e.getMessage());
           }
     }
 

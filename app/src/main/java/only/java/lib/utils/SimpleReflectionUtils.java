@@ -1,6 +1,6 @@
 package only.java.lib.utils;
 
-import only.java.lib.exceptions.ReflectionException;
+import only.java.lib.exceptions.SimpleReflectionException;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -11,21 +11,21 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class ReflectionUtils {
+public class SimpleReflectionUtils {
 
-    private static final Logger logger = Logger.getLogger(ReflectionUtils.class.getName());
+    private static final Logger logger = Logger.getLogger(SimpleReflectionUtils.class.getName());
 
     private static final String SET = "set";
 
     private static final String GET = "get";
 
-    private ReflectionUtils() {}
+    private SimpleReflectionUtils() {}
 
     public static void copyProperties(Object source, Object target) {
         try {
             mapObjects(source, target);
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils copyProperties execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils copyProperties execution");
         }
     }
 
@@ -37,7 +37,7 @@ public class ReflectionUtils {
             mapObjects(source, target);
             return target;
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils mapper execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils mapper execution");
         }
     }
 
@@ -52,7 +52,7 @@ public class ReflectionUtils {
                 setter.invoke(target, getter.invoke(source));
             }
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils mapObjects execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils mapObjects execution");
         }
     }
 
@@ -63,7 +63,7 @@ public class ReflectionUtils {
                     return method;
             return null;
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils getGetter execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils getGetter execution");
         }
     }
 
@@ -74,7 +74,7 @@ public class ReflectionUtils {
                     return method;
             return null;
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils getSetter execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils getSetter execution");
         }
     }
 
@@ -83,7 +83,7 @@ public class ReflectionUtils {
             List<Class<?>> allClasses = findProjectClasses(path);
             return allClasses.stream().filter(clazz -> clazz.isAnnotationPresent(annotation)).toList();
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils findClassesWithAnnotation execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils findClassesWithAnnotation execution");
         }
     }
 
@@ -98,7 +98,7 @@ public class ReflectionUtils {
             });
             return instantiableClasses;
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils getInstantiableClasses execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils getInstantiableClasses execution");
         }
     }
 
@@ -122,7 +122,7 @@ public class ReflectionUtils {
             });
             return classes;
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils findProjectClasses execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils findProjectClasses execution");
         }
     }
 
@@ -134,7 +134,7 @@ public class ReflectionUtils {
 
             return directories;
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils getPackagesPath execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils getPackagesPath execution");
         }
     }
 
@@ -151,7 +151,7 @@ public class ReflectionUtils {
                 }
             }
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils enterInAllDirectoriesLevels execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils enterInAllDirectoriesLevels execution");
         }
     }
 
@@ -160,7 +160,7 @@ public class ReflectionUtils {
             Class clazz = Class.forName(className);
             return clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils getInstance execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils getInstance execution");
         }
     }
 
@@ -168,8 +168,19 @@ public class ReflectionUtils {
         try {
             return clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            throw new ReflectionException("Error during ReflectionUtils getInstance execution");
+            throw new SimpleReflectionException("Error during ReflectionUtils getInstance execution");
         }
+    }
+
+    public static Class<?> getInterfaceImplementation(String path, Class clazz) {
+        if (clazz.isInterface()) {
+            for (Class<?> instatiableClass : getInstantiableClasses(path)) {
+                if (clazz.isAssignableFrom(instatiableClass)) {
+                    return instatiableClass;
+                }
+            }
+        }
+        return clazz;
     }
 
 }

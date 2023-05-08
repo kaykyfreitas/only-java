@@ -1,10 +1,11 @@
 package only.java.exec;
 
+import only.java.lib.annotations.Component;
 import only.java.lib.annotations.Inject;
 import only.java.lib.annotations.Injectable;
 import only.java.service.AppService;
 
-@Injectable
+@Injectable @Component
 public class MyTestExec {
 
 //    @Inject

@@ -2,7 +2,6 @@ package only.java.lib.annotations;
 
 import javax.inject.Scope;
 import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -10,4 +9,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Scope
 @Documented
 @Retention(RUNTIME)
-public @interface Injectable {}
+public @interface Component {
+}
